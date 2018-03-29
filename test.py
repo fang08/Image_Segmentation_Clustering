@@ -46,18 +46,18 @@ im2 = im.reshape(321*481,3)
 # convert to np.float32
 im3 = np.float32(im2)
 
-# define criteria, number of clusters(K) and apply kmeans()
-criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 15, 1.0)
-K = 8
-compactness, label, center = cv2.kmeans(im3, K, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
-label1 = label.reshape(321, 481)
-# print label1.shape
-
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-imgplot = plt.imshow(label1)
-plt.colorbar()
-plt.show()
+# # define criteria, number of clusters(K) and apply kmeans()
+# criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 15, 1.0)
+# K = 8
+# compactness, label, center = cv2.kmeans(im3, K, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+# label1 = label.reshape(321, 481)
+# # print label1.shape
+#
+# import matplotlib.pyplot as plt
+# import matplotlib.image as mpimg
+# imgplot = plt.imshow(label1)
+# plt.colorbar()
+# plt.show()
 
 
 ###########   SOM  #######################
@@ -101,18 +101,19 @@ import matplotlib.pyplot as plt
 #
 #
 # # Resize it to 10% of the original size to speed up the processing
-# img = sp.misc.imresize(im2, 0.40) / 255.
+# img = sp.misc.imresize(im, 0.10) / 255.
 # # Convert the image into a graph with the value of the gradient on the edges.
 # graph = image.img_to_graph(img)
 # print graph
 #
 # labels = spectral_clustering(graph, n_clusters = 10)
 # # assign_labels = 'discretize', random_state=1
-# print labels.shape
+# # print labels.shape
+# labels = labels.reshape(img.shape)
 # # labels = sp.misc.imresize(321, 481)
-# # imgplot = plt.imshow(labels)
-# # plt.colorbar()
-# # plt.show()
+# imgplot = plt.imshow(labels)
+# plt.colorbar()
+# plt.show()
 
 
 # # load the raccoon face as a numpy array
@@ -138,3 +139,15 @@ import matplotlib.pyplot as plt
 # imgplot = plt.imshow(labels)
 # plt.colorbar()
 # plt.show()
+
+
+####### GMM ######
+from sklearn.mixture import GaussianMixture
+gmm = GaussianMixture(n_components=8, covariance_type="tied")
+gmm = gmm.fit(im2)
+
+cluster = gmm.predict(im2)
+cluster = cluster.reshape(321, 481)
+plt.imshow(cluster)
+plt.colorbar()
+plt.show()
