@@ -17,8 +17,8 @@ import numpy as np
 
 
 import scipy.io as sio
-mat_contents = sio.loadmat('ImsAndTruths2092.mat')
-im = mat_contents['Im']  # numpy.ndarray
+# mat_contents = sio.loadmat('ImsAndTruths2092.mat')
+# im = mat_contents['Im']  # numpy.ndarray
 # seg1 = mat_contents['Seg1']  # 15
 # seg2 = mat_contents['Seg2']  # 10
 # seg3 = mat_contents['Seg3']  # 17
@@ -39,12 +39,12 @@ im = mat_contents['Im']  # numpy.ndarray
 # print b
 
 
-im2 = im.reshape(321*481,3)
+# im2 = im.reshape(321*481,3)
 # print "im2:\n"
 # print im2
 
 # convert to np.float32
-im3 = np.float32(im2)
+# im3 = np.float32(im2)
 
 # # define criteria, number of clusters(K) and apply kmeans()
 # criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 15, 1.0)
@@ -143,11 +143,61 @@ import matplotlib.pyplot as plt
 
 ####### GMM ######
 from sklearn.mixture import GaussianMixture
-gmm = GaussianMixture(n_components=8, covariance_type="tied")
-gmm = gmm.fit(im2)
+# gmm = GaussianMixture(n_components=8, covariance_type="tied")
+# gmm = gmm.fit(im2)
+#
+# cluster = gmm.predict(im2)
+# cluster = cluster.reshape(321, 481)
+# plt.imshow(cluster)
+# plt.colorbar()
+# plt.show()
 
-cluster = gmm.predict(im2)
-cluster = cluster.reshape(321, 481)
+
+mat_contents2 = sio.loadmat('PaviaHyperIm.mat')
+imh = mat_contents2['PaviaHyperIm']
+imh2 = imh.reshape(610*340, 103)
+gmm2 = GaussianMixture(n_components=8, covariance_type="tied")
+gmm2 = gmm2.fit(imh2)
+
+cluster = gmm2.predict(imh2)
+cluster = cluster.reshape(610, 340)
 plt.imshow(cluster)
 plt.colorbar()
 plt.show()
+# can work, but slow
+
+
+###### k means hyperspectral #######
+# import time
+# start_time = time.time()
+#
+# from sklearn.cluster import KMeans
+# mat_contents2 = sio.loadmat('PaviaHyperIm.mat')
+# imh = mat_contents2['PaviaHyperIm']
+# imh2 = imh.reshape(610*340, 103)
+# kmeansh = KMeans(n_clusters=8, random_state=0).fit(imh2)
+# labelsh = kmeansh.labels_.reshape(610, 340)
+# print 'im here!'
+# imgplot = plt.imshow(labelsh)
+# plt.colorbar()
+# plt.show()
+# --- 91.3812999725 seconds ---
+# slow but better pictures
+
+
+
+# # convert to np.float32
+# imh3 = np.float32(imh2)
+#
+# criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 15, 1.0)
+# K = 8
+# compactness, label, center = cv2.kmeans(imh3, K, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+# label1 = label.reshape(610, 340)
+# print 'im here!'
+# imgplot = plt.imshow(label1)
+# plt.colorbar()
+# plt.show()
+# # --- 10.6716358662 seconds ---
+# fast but not so good clustering
+
+# print("--- %s seconds ---" % (time.time() - start_time))
