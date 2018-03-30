@@ -1,9 +1,7 @@
 import scipy.io
-from sklearn.metrics.classification import *
-
 
 def evalRGB(seg, gt):
-    print OCE(seg,gt)
+    return OCE(seg,gt)
 
 
 def PE(Ig,Is):
@@ -26,7 +24,7 @@ def PE(Ig,Is):
 def OCE(seg,gt):
     e1=PE(seg,gt)
     e2=PE(gt,seg)
-    print e1,e2
+    #print e1,e2
     return min(e1,e2)
 
 #create dict to store cluster-index pairs
@@ -82,6 +80,6 @@ def delta(x):
 
 if __name__ == '__main__':
     mat = scipy.io.loadmat('ImsAndTruths2092.mat')
-    seg = np.array(mat["Seg1"])
-    gt = np.array(mat["Seg3"])
-    evalRGB(seg,gt)
+    seg = mat["Seg1"]
+    gt = mat["Seg2"]
+    print evalRGB(seg,gt)
