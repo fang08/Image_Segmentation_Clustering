@@ -10,6 +10,7 @@ from sklearn.decomposition import PCA
 
 from MyKmeans import MyKmeans
 from MyGMM import MyGMM
+from MyFCM import MyFCM
 
 ## load RGB images
 mat_rgb = sio.loadmat('ImsAndTruths2092.mat')  # could let user input name of picture
@@ -34,7 +35,17 @@ im_pavia = mat_hyper['PaviaHyperIm']
 # plt.colorbar()
 # plt.show()
 
-result = MyGMM(im_pavia, 'Hyper', 8)
+# result = MyGMM(im_pavia, 'Hyper', 8)
+# plt.imshow(result)
+# plt.colorbar()
+# plt.show()
+
+# result = MyFCM(im_rgb, 'RGB', 8)
+# plt.imshow(result)
+# plt.colorbar()
+# plt.show()
+
+result = MyFCM(im_pavia, 'Hyper', 8)
 plt.imshow(result)
 plt.colorbar()
 plt.show()
