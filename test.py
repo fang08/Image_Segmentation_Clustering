@@ -9,7 +9,7 @@
 
 
 ### K means #####
-import cv2
+#import cv2
 
 import numpy as np
 # print np.mgrid[0:5,0:5]
@@ -39,30 +39,30 @@ im = mat_contents['Im']  # numpy.ndarray
 # print b
 
 
-im2 = im.reshape(321*481,3)
-# print "im2:\n"
-# print im2
-
-# convert to np.float32
-im3 = np.float32(im2)
-
-# define criteria, number of clusters(K) and apply kmeans()
-criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 15, 1.0)
-K = 8
-compactness, label, center = cv2.kmeans(im3, K, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
-label1 = label.reshape(321, 481)
-# print label1.shape
-
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-imgplot = plt.imshow(label1)
-plt.colorbar()
-plt.show()
+# im2 = im.reshape(321*481,3)
+# # print "im2:\n"
+# # print im2
+#
+# # convert to np.float32
+# im3 = np.float32(im2)
+#
+# # define criteria, number of clusters(K) and apply kmeans()
+# criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 15, 1.0)
+# K = 8
+# compactness, label, center = cv2.kmeans(im3, K, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+# label1 = label.reshape(321, 481)
+# # print label1.shape
+#
+# import matplotlib.pyplot as plt
+# import matplotlib.image as mpimg
+# imgplot = plt.imshow(label1)
+# plt.colorbar()
+# plt.show()
 
 
 ###########   SOM  #######################
 
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 # from minisom import MiniSom
 # som = MiniSom(4, 4, 3, sigma=1.0, learning_rate=0.5)
 # som.random_weights_init(im3)
