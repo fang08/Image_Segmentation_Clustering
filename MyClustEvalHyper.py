@@ -3,8 +3,8 @@ from MyMartinIndex import oce
 
 
 def eval_hyper(seg, gt, mask):
-    for i in xrange(1, len(seg) + 1):
-        for j in xrange(1, len(seg[0] + 1)):
+    for i in xrange(len(seg)):
+        for j in xrange(len(seg[0])):
             seg[i][j] *= mask[i][j]
     return oce(seg, gt)
 
