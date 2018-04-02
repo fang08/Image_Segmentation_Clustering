@@ -6,7 +6,7 @@ import networkx as nx
 from sklearn.feature_extraction import image
 from sklearn.cluster import spectral_clustering
 import scipy as sp
-from scipy.sparse import coo_matrix
+import pylab as pl
 
 mat_contents = sio.loadmat('ImsAndTruths2092.mat')
 im = mat_contents['Im']
@@ -29,9 +29,9 @@ labels = spectral_clustering(graph, n_clusters=2, n_init=10, eigen_solver='arpac
 label_im = -np.ones(mask.shape)
 label_im[mask] = labels
 
-pl.matshow(label_im)
+imgplot = plt.imshow(labels)
 
-pl.show()
+plt.show()
 
 
 #adj_mat = nx.to_numpy_matrix(graph)

@@ -4,7 +4,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import skfuzzy as fuzz
 
-colors = ['b', 'orange', 'g', 'r', 'c', 'm', 'y', 'k', 'Brown', 'ForestGreen']
+
 
 mat_contents = sio.loadmat('ImsAndTruths2092.mat')
 im = mat_contents['Im']
@@ -18,7 +18,7 @@ imt= np.transpose(im2)
 
 ncenters = 8
 
-cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(data, ncenters, 2, error=0.005, maxiter=1000, init=None)
+cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(imt, ncenters, 2, error=0.005, maxiter=1000, init=None)
 
 cluster_membership = np.argmax(u, axis=0)
 

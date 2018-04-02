@@ -17,6 +17,7 @@ def MyFCM (im, imageType, numClusts):
     if imageType == 'RGB':
         im_trans = np.transpose(im_change)
         cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(im_trans, numClusts, 2, error=0.005, maxiter=1000, init=None)
+	#print np.shape(u)
         # def cmeans(data, c, m, error, maxiter, metric='euclidean', init=None, seed=None)
         clusters = np.argmax(u, axis=0)
         clusters = clusters.reshape(height, width)
@@ -29,5 +30,5 @@ def MyFCM (im, imageType, numClusts):
         cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(im_trans, numClusts, 2, error=0.005, maxiter=1000, init=None)
         clusters = np.argmax(u, axis=0)
         clusters = clusters.reshape(height, width)
-
+	
     return clusters
