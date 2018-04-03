@@ -1,9 +1,8 @@
-import scipy.io as sio
-import matplotlib.pyplot as plt
-
 import matplotlib.pyplot as plt
 import scipy.io as sio
 from scipy.ndimage import median_filter
+import glob
+import numpy as np
 
 from MyKmeans import MyKmeans
 from MyGMM import MyGMM
@@ -12,6 +11,8 @@ from MySOM import MySOM
 from MySpectral import MySpectral
 
 from MyClustEvalHyper import eval_hyper
+from MyClustEvalRGB import evalRGB
+
 
 
 def showpic(img):
@@ -40,6 +41,43 @@ def findmin(l):
 # plt.show()
 
 # load hyperspectral images
+
+def rgb_eval():
+
+    mypath = '/home/monker490/Work/ML/Project1code/ImsAndSegs/*' ##change this path to images
+    dicpath = '/home/monker490/Work/ML/rgb_results/'
+    #onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+    onlyfiles = glob.glob(mypath)
+    #print onlyfiles
+   
+    kmean_rgb = []
+    gmm_rgb = []
+    fcm_rgb = []
+    som_rgb = []
+    spec_rgb = []
+   
+    for i, x in enumerate(onlyfiles):
+        mat_rgb = sio.loadmat(x)
+	im_rgb = mat_rgb['Im']
+	segs_rgb = [mat_rgb['Seg1'], mat_rgb['Seg2'], mat_rgb['Seg3']]
+
+	(kmean_img,conn_comp) = MyKmeans(im_rgb, 'RGB', 8)
+	conn_comp = median_filter(conn_comp,7) #KMEAN ALREADY HAS FILTER ON OUTPUT	
+	filename1 = dicpath + 'kmean_rgb_clustered_' + "%04d" % i
+	filename2 = dicpath + 'kmean_rgb_concomp_' + "%04d" % i
+        sio.savemat(filename1, {'res': kmean_img})
+	sio.savemat(filename2, {'res': conn_comp})	
+	value = 1	
+	for j, s in enumerate(segs_rgb):
+	    temp = evalRGB(kmean_img,s)
+	    if (value > temp):
+		value = temp
+	kmean_rgb += [value]
+	
+print ('kmeans rgb results: ')
+print (kmean_rgb) 
+print (findmin(kmean_rgb))
+		
 
 
 def pavia_hyper_eval():
@@ -105,7 +143,8 @@ def pavia_hyper_eval():
 
 
 if __name__ == '__main__':
-    pavia_hyper_eval()
+    rgb_eval()
+    #pavia_hyper_eval()
 
 # for i in range(len(result)):
 #     result[i] = [k + 1 for k in result[i]]
