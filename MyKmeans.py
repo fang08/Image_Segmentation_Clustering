@@ -25,7 +25,7 @@ def MyKmeans (im, imageType, numClusts):
     elif imageType == 'Hyper':
         pca = PCA(n_components=3)
         im_reduced = pca.fit_transform(im_change)
-        kmeans = KMeans(n_clusters=numClusts, random_state=0)
+        kmeans = KMeans(n_clusters=numClusts, random_state=0, n_jobs=-1)
         kmeans.fit(im_reduced)
         labels = kmeans.labels_.reshape(height, width)
 

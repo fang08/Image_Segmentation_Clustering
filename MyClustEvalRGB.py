@@ -3,6 +3,23 @@ import scipy.io
 from MyMartinIndex import oce
 
 
+# def relabel(seg):
+#     m = len(seg)
+#     n = len(seg[0])
+#     lmap = {}
+#     label_count = 1
+#     for i in xrange(m):
+#         for j in xrange(n):
+#             if lmap.get(seg[i][j]) is None:
+#                 lmap.update({seg[i][j]: label_count})
+#                 label_count += 1
+#     for i in xrange(m):
+#         for j in xrange(n):
+#             seg[i][j] = lmap.get(seg[i][j])
+#
+#     return seg
+
+
 def evalRGB(seg, gt):
     return oce(seg, gt)
 
@@ -11,7 +28,7 @@ if __name__ == '__main__':
     mat = scipy.io.loadmat('ImsAndTruths2092.mat')
     seg = mat["Seg1"]
     gt = mat["Seg2"]
-    print evalRGB(seg, gt)
+    print evalRGB(seg, seg)
 
 # def PE(Ig,Is):
 #     #preprocessing
