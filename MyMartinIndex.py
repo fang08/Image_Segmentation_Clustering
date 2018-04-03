@@ -24,7 +24,7 @@ def w_vector(m):
     res = [0]
     tmp = 0
 
-    for i in xrange(1, len(m) + 1):
+    for i in m:
         res.append(len(m[i]))
         tmp += len(m[i])
 
@@ -36,11 +36,11 @@ def w_vector(m):
 def w_matrix(m1, m2):
     mat = [[0 for x in range(len(m2) + 1)] for y in range(len(m1) + 1)]
 
-    for j in xrange(1, len(m1) + 1):
+    for j in m1:
         sum = 0
         temp = [0]
         Aj = m1[j]
-        for i in xrange(1, len(m2) + 1):
+        for i in m2:
             Bi = m2[i]
             temp.append(delta(len(Aj.intersection(Bi))) * len(Bi))
             sum += temp[-1]
@@ -54,13 +54,13 @@ def p_eval(Ig, Is):
     Wj = w_vector(m1)
     Wji = w_matrix(m1, m2)
     res = 0
-    for j in xrange(1, len(m1) + 1):
+    for j in m1:
         tmp = 0
-        for i in xrange(1, len(m2) + 1):
+        for i in m2:
             l1 = len(m1[j].intersection(m2[i]))
             l2 = len(m1[j].union(m2[i]))
-            tmp = l1 * 1.0 / l2 * Wji[j][i]
-        res += (1 - tmp) * Wji[j][i]
+            tmp += l1 * 1.0 / l2 * Wji[j][i]
+        res += (1 - tmp) * Wj[j]
     return res
 
 
@@ -82,8 +82,8 @@ def relabel(seg):
 
 
 def oce(seg, gt):
-    seg = relabel(seg)
-    gt = relabel(gt)
+    #seg = relabel(seg)
+    #gt = relabel(gt)
     e1 = p_eval(seg, gt)
     e2 = p_eval(gt, seg)
     return min(e1, e2)
