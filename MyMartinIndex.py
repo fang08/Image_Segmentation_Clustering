@@ -12,7 +12,9 @@ def get_pixel_map(seg):
 
     for i in xrange(m):
         for j in xrange(n):
-            if pixelMap.get(seg[i][j]) is None:
+            if seg[i][j] == 0:
+                continue
+            elif pixelMap.get(seg[i][j]) is None:
                 pixelMap.update({seg[i][j]: set([])})
                 pixelMap[seg[i][j]].add((i, j))
             else:
@@ -24,7 +26,7 @@ def w_vector(m):
     res = [0]
     tmp = 0
 
-    for i in xrange(1,len(m)+1):
+    for i in xrange(1, len(m) + 1):
         res.append(len(m[i]))
         tmp += len(m[i])
 
@@ -36,15 +38,18 @@ def w_vector(m):
 def w_matrix(m1, m2):
     mat = [[0 for x in range(len(m2) + 1)] for y in range(len(m1) + 1)]
 
-    for j in xrange(1,len(m1)+1):
+    for j in xrange(1, len(m1) + 1):
         sum = 0
         temp = [0]
         Aj = m1[j]
-        for i in xrange(1,len(m2)+1):
+        for i in xrange(1, len(m2) + 1):
             Bi = m2[i]
             temp.append(delta(len(Aj.intersection(Bi))) * len(Bi))
             sum += temp[-1]
-        mat[j] = [k * 1.0 / sum for k in temp]
+        if sum == 0:
+            mat[j] = [k * 0 for k in temp]
+        else:
+            mat[j] = [k * 1.0 / sum for k in temp]
     return mat
 
 
@@ -54,9 +59,9 @@ def p_eval(Ig, Is):
     Wj = w_vector(m1)
     Wji = w_matrix(m1, m2)
     res = 0
-    for j in xrange(1,len(m1)+1):
+    for j in xrange(1, len(m1) + 1):
         tmp = 0
-        for i in xrange(1,len(m2)+1):
+        for i in xrange(1, len(m2) + 1):
             l1 = len(m1[j].intersection(m2[i]))
             l2 = len(m1[j].union(m2[i]))
             tmp += (l1 * 1.0 / l2 * Wji[j][i])

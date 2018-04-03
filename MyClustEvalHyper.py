@@ -16,7 +16,7 @@ def eval_hyper(seg, gt, mask):
                 seg[i][j] = 0
 
     show_pic(seg)
-    show_pic(gt)
+    # show_pic(gt)
     return oce(seg, gt)
 
 

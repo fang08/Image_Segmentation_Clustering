@@ -2,7 +2,7 @@ import scipy as sp
 import numpy as np
 from sklearn.cluster import SpectralClustering
 from sklearn.decomposition import PCA
-# from skimage.transform import resize
+from skimage.transform import resize
 from skimage.morphology import label as cl
 
 
@@ -25,7 +25,8 @@ def MySpectral (im, imageType, numClusts):
     # RGB images
     if imageType == 'RGB':
         org_size = im.shape
-        im_small = sp.misc.imresize(im, size=0.20, mode="RGB")
+        # im_small = sp.misc.imresize(im, size=0.20, mode="RGB")
+        im_small = resize(im, (org_size[0] / 5, org_size[1] / 5))
         shk_size = im_small.shape
         im_input = im_small.reshape(shk_size[0] * shk_size[1], 3)
 
@@ -36,7 +37,8 @@ def MySpectral (im, imageType, numClusts):
         sc.fit(im_input)
         labels = sc.labels_  #.astype(np.int)
         labels = labels.reshape(shk_size[0], shk_size[1])
-        labels_r = sp.misc.imresize(labels, size=(org_size[0], org_size[1]))
+        # labels_r = sp.misc.imresize(labels, size=(org_size[0], org_size[1]))
+        labels_r = resize(labels, (org_size[0], org_size[1]))
 
         # labels = labels.reshape(image_resized.shape[0], image_resized.shape[1])
         # labels_r = resize(labels, (im[0], im[1]))
@@ -44,7 +46,7 @@ def MySpectral (im, imageType, numClusts):
         # calculate connected components
         cc_image = cl(labels_r, connectivity=2)
 
-        return labels_r, cc_image
+        return labels, cc_image
 
     # hyperspectral images
     elif imageType == 'Hyper':
@@ -57,7 +59,8 @@ def MySpectral (im, imageType, numClusts):
         print (imh.shape)
 
         org_size = imh.shape
-        im_small = sp.misc.imresize(imh, size=0.20, mode="RGB")
+        # im_small = sp.misc.imresize(imh, size=0.20, mode="RGB")
+        im_small = resize(imh, (122, 68))
         shk_size = im_small.shape
         im_input = im_small.reshape(shk_size[0] * shk_size[1], 3)
 
@@ -65,6 +68,14 @@ def MySpectral (im, imageType, numClusts):
         sc.fit(im_input)
         labels = sc.labels_
         labels = labels.reshape(shk_size[0], shk_size[1])
-        labels_r = sp.misc.imresize(labels, size=(org_size[0], org_size[1]))
-
+        # labels_r = sp.misc.imresize(labels, size=(org_size[0], org_size[1]), )
+        labels_r = resize(labels, (org_size[0], org_size[1]), preserve_range=True, clip=False)
+        labels_r = cast_label(labels_r)
         return labels_r
+
+
+def cast_label(img):
+    for i in range(len(img)):
+        for j in range(len(img[0])):
+            img[i][j] = round(img[i][j]) + 1
+    return img
