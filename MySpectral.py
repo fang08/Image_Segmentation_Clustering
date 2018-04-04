@@ -42,11 +42,11 @@ def MySpectral (im, imageType, numClusts):
 
         # labels = labels.reshape(image_resized.shape[0], image_resized.shape[1])
         # labels_r = resize(labels, (im[0], im[1]))
-
+        labels_r = cast_label(labels_r)
         # calculate connected components
         cc_image = cl(labels_r, connectivity=2)
 
-        return labels, cc_image
+        return labels_r, cc_image
 
     # hyperspectral images
     elif imageType == 'Hyper':

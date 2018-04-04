@@ -27,8 +27,11 @@ def w_vector(m):
     tmp = 0
 
     for i in xrange(1, len(m) + 1):
-        res.append(len(m[i]))
-        tmp += len(m[i])
+        if i in m:
+            res.append(len(m[i]))
+            tmp += len(m[i])
+        else:
+            res.append(0)
 
     res = [k * 1.0 / tmp for k in res]
 
