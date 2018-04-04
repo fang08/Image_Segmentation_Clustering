@@ -21,7 +21,7 @@ def get_pixel_map(seg):
                 vm = max(vm, seg[i][j])
             else:
                 pixelMap[seg[i][j]].add((i, j))
-    for i in range(1, vm + 1):
+    for i in range(1, int(vm + 1)):
         if i in pixelMap:
             continue
         else:

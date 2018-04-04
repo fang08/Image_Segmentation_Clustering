@@ -19,7 +19,7 @@ def MyKmeans (im, imageType, numClusts):
     # RGB images
     if imageType == 'RGB':
         # how to find the best k?
-        kmeans = KMeans(n_clusters=numClusts, random_state=0, n_jobs=-1)
+        kmeans = KMeans(n_clusters=numClusts, random_state=0)
         # other parameters include: n_clusters=8, init='k-means++',
         # n_init=10, max_iter=300, tol=0.0001, precompute_distances='auto',
         # verbose=0, random_state=None, copy_x=True, n_jobs=1, algorithm='auto'

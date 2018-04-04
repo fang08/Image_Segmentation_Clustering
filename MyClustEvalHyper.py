@@ -10,8 +10,8 @@ def show_pic(img):
 
 
 def eval_hyper(seg, gt, mask):
-    for i in xrange(len(seg)):
-        for j in xrange(len(seg[0])):
+    for i in xrange(len(mask)):
+        for j in xrange(len(mask[0])):
             if mask[i][j] == 0:
                 seg[i][j] = 0
 

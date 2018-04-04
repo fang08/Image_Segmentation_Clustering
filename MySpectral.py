@@ -72,6 +72,7 @@ def MySpectral (im, imageType, numClusts):
         labels = sc.labels_
         labels = labels.reshape(shk_size[0], shk_size[1])
         # labels_r = sp.misc.imresize(labels, size=(org_size[0], org_size[1]), )
+        labels = median_filter(labels, 7)
         labels_r = resize(labels, (org_size[0], org_size[1]), preserve_range=True, clip=False)
         labels_r = cast_label(labels_r)
         return labels_r
@@ -80,5 +81,5 @@ def MySpectral (im, imageType, numClusts):
 def cast_label(img):
     for i in range(len(img)):
         for j in range(len(img[0])):
-            img[i][j] = round(img[i][j]) + 1
+            img[i][j] = int(round(img[i][j]) + 1)
     return img
