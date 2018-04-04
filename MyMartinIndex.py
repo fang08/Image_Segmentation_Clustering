@@ -9,6 +9,7 @@ def get_pixel_map(seg):
     m = len(seg)
     n = len(seg[0])
     pixelMap = {}
+    vm = 1
 
     for i in xrange(m):
         for j in xrange(n):
@@ -17,8 +18,14 @@ def get_pixel_map(seg):
             elif pixelMap.get(seg[i][j]) is None:
                 pixelMap.update({seg[i][j]: set([])})
                 pixelMap[seg[i][j]].add((i, j))
+                vm = max(vm, seg[i][j])
             else:
                 pixelMap[seg[i][j]].add((i, j))
+    for i in range(1, vm + 1):
+        if 1 in pixelMap:
+            continue
+        else:
+            pixelMap.update(({i: set([])}))
     return pixelMap
 
 
