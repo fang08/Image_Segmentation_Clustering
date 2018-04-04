@@ -40,7 +40,10 @@ def w_vector(m):
         else:
             res.append(0)
 
-    res = [k * 1.0 / tmp for k in res]
+    if tmp == 0:
+        res = [k * 0 for k in res]
+    else:
+        res = [k * 1.0 / tmp for k in res]
 
     return res
 
