@@ -4,6 +4,7 @@ from sklearn.cluster import SpectralClustering
 from sklearn.decomposition import PCA
 from skimage.transform import resize
 from skimage.morphology import label as cl
+from scipy.ndimage import median_filter
 
 
 def MySpectral (im, imageType, numClusts):
@@ -26,25 +27,27 @@ def MySpectral (im, imageType, numClusts):
     if imageType == 'RGB':
         org_size = im.shape
         # im_small = sp.misc.imresize(im, size=0.20, mode="RGB")
-        im_small = resize(im, (org_size[0] / 5, org_size[1] / 5))
+        im_small = resize(im, (org_size[0] / 4, org_size[1] / 4))
         shk_size = im_small.shape
         im_input = im_small.reshape(shk_size[0] * shk_size[1], 3)
 
-        sc = SpectralClustering(n_clusters=numClusts, eigen_solver='arpack', affinity='nearest_neighbors', n_jobs=-1)
+        sc = SpectralClustering(n_clusters=numClusts, affinity='nearest_neighbors', n_jobs=-1)
         # n_clusters = 8, eigen_solver = None, random_state = None, n_init = 10, gamma = 1.0, affinity ='rbf',
         # n_neighbors = 10, eigen_tol = 0.0, assign_labels ='kmeans', degree = 3, coef0 = 1,
-        # kernel_params = None, n_jobs = 1
+        # kernel_params = None, n_jobs = 1 eigen_solver='arpack',
         sc.fit(im_input)
         labels = sc.labels_  #.astype(np.int)
         labels = labels.reshape(shk_size[0], shk_size[1])
         # labels_r = sp.misc.imresize(labels, size=(org_size[0], org_size[1]))
-        labels_r = resize(labels, (org_size[0], org_size[1]))
+        labels_filtered = median_filter(labels, 7)
+        labels_r = resize(labels_filtered, (org_size[0], org_size[1]), preserve_range=True, clip=False)
 
         # labels = labels.reshape(image_resized.shape[0], image_resized.shape[1])
         # labels_r = resize(labels, (im[0], im[1]))
-        labels_r = cast_label(labels_r)
+
         # calculate connected components
         cc_image = cl(labels_r, connectivity=2)
+        labels_r = cast_label(labels_r)
 
         return labels_r, cc_image
 
@@ -64,7 +67,7 @@ def MySpectral (im, imageType, numClusts):
         shk_size = im_small.shape
         im_input = im_small.reshape(shk_size[0] * shk_size[1], 3)
 
-        sc = SpectralClustering(n_clusters=numClusts, eigen_solver='arpack', affinity='nearest_neighbors', n_jobs=-1)
+        sc = SpectralClustering(n_clusters=numClusts, eigen_solver='arpack', affinity='nearest_neighbors')
         sc.fit(im_input)
         labels = sc.labels_
         labels = labels.reshape(shk_size[0], shk_size[1])
