@@ -71,9 +71,16 @@ def p_eval(Ig, Is):
     for j in xrange(1, len(m1) + 1):
         tmp = 0
         for i in xrange(1, len(m2) + 1):
-            l1 = len(m1[j].intersection(m2[i]))
-            l2 = len(m1[j].union(m2[i]))
-            tmp += (l1 * 1.0 / l2 * Wji[j][i])
+            s1 = set([])
+            s2 = set([])
+            if j in m1:
+                s1 = m1[j]
+            if i in m2:
+                s2 = m2[i]
+            l1 = len(s1.intersection(s2))
+            l2 = len(s1.union(s2))
+            if l2 != 0:
+                tmp += (l1 * 1.0 / l2 * Wji[j][i])
         res += (1 - tmp) * Wj[j]
     return res
 
