@@ -30,7 +30,7 @@ def MySpectral (im, imageType, numClusts):
         shk_size = im_small.shape
         im_input = im_small.reshape(shk_size[0] * shk_size[1], 3)
 
-        sc = SpectralClustering(n_clusters=numClusts, eigen_solver='arpack', affinity='nearest_neighbors')
+        sc = SpectralClustering(n_clusters=numClusts, eigen_solver='arpack', affinity='nearest_neighbors', n_jobs=-1)
         # n_clusters = 8, eigen_solver = None, random_state = None, n_init = 10, gamma = 1.0, affinity ='rbf',
         # n_neighbors = 10, eigen_tol = 0.0, assign_labels ='kmeans', degree = 3, coef0 = 1,
         # kernel_params = None, n_jobs = 1
@@ -64,7 +64,7 @@ def MySpectral (im, imageType, numClusts):
         shk_size = im_small.shape
         im_input = im_small.reshape(shk_size[0] * shk_size[1], 3)
 
-        sc = SpectralClustering(n_clusters=numClusts, eigen_solver='arpack', affinity='nearest_neighbors')
+        sc = SpectralClustering(n_clusters=numClusts, eigen_solver='arpack', affinity='nearest_neighbors', n_jobs=-1)
         sc.fit(im_input)
         labels = sc.labels_
         labels = labels.reshape(shk_size[0], shk_size[1])

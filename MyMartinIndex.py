@@ -22,7 +22,7 @@ def get_pixel_map(seg):
             else:
                 pixelMap[seg[i][j]].add((i, j))
     for i in range(1, vm + 1):
-        if 1 in pixelMap:
+        if i in pixelMap:
             continue
         else:
             pixelMap.update(({i: set([])}))
