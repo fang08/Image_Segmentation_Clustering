@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from minisom import MiniSom
 from sklearn.decomposition import PCA
+from scipy.ndimage import median_filter
+from skimage.morphology import label as cl
 
 
 def MySOM(im, imageType, numClusts):
@@ -38,4 +40,7 @@ def MySOM(im, imageType, numClusts):
 
     output = np.array(output)
     output = output.reshape(height, width)
-    return output
+    cc_image = cl(output, connectivity=2)
+    labels_filtered = median_filter(output,7)
+    
+    return labels_filtered, cc_image
