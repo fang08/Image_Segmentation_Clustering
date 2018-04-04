@@ -44,9 +44,15 @@ def w_matrix(m1, m2):
     for j in xrange(1, len(m1) + 1):
         sum = 0
         temp = [0]
-        Aj = m1[j]
+        if j in m1:
+            Aj = m1[j]
+        else:
+            Aj = set([])
         for i in xrange(1, len(m2) + 1):
-            Bi = m2[i]
+            if i in m2:
+                Bi = m2[i]
+            else:
+                Bi = set([])
             temp.append(delta(len(Aj.intersection(Bi))) * len(Bi))
             sum += temp[-1]
         if sum == 0:
