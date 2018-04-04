@@ -74,9 +74,9 @@ def rgb_eval():
 		value = temp
 	kmean_rgb += [value]
 	
-print ('kmeans rgb results: ')
-print (kmean_rgb) 
-print (findmin(kmean_rgb))
+    print ('kmeans rgb results: ')
+    print (kmean_rgb) 
+    print (findmin(kmean_rgb))
 		
 
 
