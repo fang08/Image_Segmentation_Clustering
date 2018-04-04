@@ -45,7 +45,7 @@ def findmin(l):
 def rgb_eval():
 
     mypath = '/home/monker490/Work/ML/Project1code/ImsAndSegs/*' ##change this path to images
-    dicpath = '/home/monker490/Work/ML/rgb_results/'
+    dicpath = '/home/monker490/Work/ML/rgb_results/som/'
     #onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
     onlyfiles = glob.glob(mypath)
     #print onlyfiles
@@ -61,10 +61,10 @@ def rgb_eval():
 	im_rgb = mat_rgb['Im']
 	segs_rgb = [mat_rgb['Seg1'], mat_rgb['Seg2'], mat_rgb['Seg3']]
 
-	(kmean_img,conn_comp) = MyKmeans(im_rgb, 'RGB', 8)
+	(kmean_img,conn_comp) = MySOM(im_rgb, 'RGB', 8)
 	conn_comp = median_filter(conn_comp,7) #KMEAN ALREADY HAS FILTER ON OUTPUT	
-	filename1 = dicpath + 'kmean_rgb_clustered_' + "%04d" % i
-	filename2 = dicpath + 'kmean_rgb_concomp_' + "%04d" % i
+	filename1 = dicpath + 'som_rgb_clustered_' + "%04d" % i
+	filename2 = dicpath + 'som_rgb_concomp_' + "%04d" % i
         sio.savemat(filename1, {'res': kmean_img})
 	sio.savemat(filename2, {'res': conn_comp})	
 	value = 1	
@@ -74,10 +74,10 @@ def rgb_eval():
 		value = temp
 	kmean_rgb += [value]
 	
-    print ('kmeans rgb results: ')
+    print ('som rgb results: ')
     print (kmean_rgb) 
     print (findmin(kmean_rgb))
-    sio.savemat(dicpath + 'kmean_rgb_results', {'kmeans': kmean_rgb})
+    sio.savemat(dicpath + 'som_rgb_results', {'som': kmean_rgb})
 		
 
 

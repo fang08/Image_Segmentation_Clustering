@@ -40,7 +40,10 @@ def MySOM(im, imageType, numClusts):
 
     output = np.array(output)
     output = output.reshape(height, width)
-    cc_image = cl(output, connectivity=2)
-    labels_filtered = median_filter(output,7)
-    
-    return labels_filtered, cc_image
+    if imageType == 'RGB':
+    	cc_image = cl(output, connectivity=2)
+    	labels_filtered = median_filter(output,7)
+    	return labels_filtered, cc_image
+    else: 
+	labels_filtered = median_filter(output,7)
+    	return labels_filtered
