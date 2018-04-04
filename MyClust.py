@@ -77,6 +77,7 @@ def rgb_eval():
     print ('kmeans rgb results: ')
     print (kmean_rgb) 
     print (findmin(kmean_rgb))
+    sio.savemat(dicpath + 'kmean_rgb_results', {'kmeans': kmean_rgb})
 		
 
 
