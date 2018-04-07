@@ -5,15 +5,16 @@ import glob
 import numpy as np
 import sys
 
-from MyKmeans import MyKmeans
-from MyGMM import MyGMM
-from MyFCM import MyFCM
-from MySOM import MySOM
-from MySpectral import MySpectral
+from MyKmeans4 import MyKmeans
+from MyGMM4 import MyGMM
+from MyFCM4 import MyFCM
+from MySOM4 import MySOM
+from MySpectral4 import MySpectral
 
 
 algos = ['Kmeans', 'SOM', 'FCM', 'Spectral', 'GMM']
 types = ['RGB', 'Hyper']
+
 
 
 if __name__ == "__main__":
