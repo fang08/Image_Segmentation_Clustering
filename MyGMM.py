@@ -1,6 +1,5 @@
 from sklearn.mixture import GaussianMixture
 from sklearn.decomposition import PCA
-from scipy.ndimage import gaussian_filter
 from scipy.ndimage import median_filter
 from skimage.morphology import label as cl
 
@@ -18,17 +17,12 @@ def MyGMM (im, imageType, numClusts):
     # RGB images
     if imageType == 'RGB':
         gmm = GaussianMixture(n_components=numClusts, covariance_type="tied")
-        # n_components=1, covariance_type='full', tol=0.001, reg_covar=1e-06,
-        # max_iter=100, n_init=1, init_params='kmeans', weights_init=None,
-        # means_init=None, precisions_init=None, random_state=None,
-        # warm_start=False, verbose=0, verbose_interval=10
         gmm = gmm.fit(im_change)
         clusters = gmm.predict(im_change)
         clusters = clusters.reshape(height, width)
         # calculate connected components
         cc_image = cl(clusters, connectivity=2)
         # add filters
-        # clusters_filtered = gaussian_filter(clusters, sigma=2)
         clusters_filtered = median_filter(clusters, 7)
         return clusters_filtered, cc_image
 
@@ -41,6 +35,5 @@ def MyGMM (im, imageType, numClusts):
         clusters = gmm.predict(im_reduced)
         clusters = clusters.reshape(height, width)
         # add filters
-        # clusters_filtered = gaussian_filter(clusters, sigma=2)
         clusters_filtered = median_filter(clusters, 7)
         return clusters_filtered

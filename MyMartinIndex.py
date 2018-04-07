@@ -95,26 +95,9 @@ def p_eval(Ig, Is):
     return res
 
 
-# def relabel(seg):
-#     m = len(seg)
-#     n = len(seg[0])
-#     lmap = {}
-#     label_count = 1
-#     for i in xrange(m):
-#         for j in xrange(n):
-#             if lmap.get(seg[i][j]) is None:
-#                 lmap.update({seg[i][j]: label_count})
-#                 label_count += 1
-#     for i in xrange(m):
-#         for j in xrange(n):
-#             seg[i][j] = lmap.get(seg[i][j])
-#
-#     return seg
 
 
 def oce(seg, gt):
-    # seg = relabel(seg)
-    # gt = relabel(gt)
     e1 = p_eval(seg, gt)
     e2 = p_eval(gt, seg)
     return min(e1, e2)

@@ -20,11 +20,7 @@ if __name__ == "__main__":
     assert len(sys.argv) >=5
     mat = sio.loadmat(sys.argv[1])
     img_name = sio.whosmat(sys.argv[1])[0][0] #Works for both RGB and hyperspectral images
-    #img_name = 'Im' ## comment previous line and use this if the key of image is different
     img = mat[img_name]
-    #plt.imshow(img)
-    #plt.colorbar()
-    #plt.show()
     arg_count = 2
     if (sys.argv[arg_count] == 'Algorithm'):
 	arg_count += 1

@@ -19,7 +19,6 @@ def MyFCM (im, imageType, numClusts):
     if imageType == 'RGB':
         im_trans = np.transpose(im_change)
         cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(im_trans, numClusts, 2, error=0.005, maxiter=1000, init=None)
-        # def cmeans(data, c, m, error, maxiter, metric='euclidean', init=None, seed=None)
         clusters = np.argmax(u, axis=0)
         clusters = clusters.reshape(height, width)
         # calculate connected components
@@ -37,6 +36,5 @@ def MyFCM (im, imageType, numClusts):
         clusters = np.argmax(u, axis=0)
         clusters = clusters.reshape(height, width)
         # add filters
-        # clusters_filtered = gaussian_filter(clusters, sigma=2)
         clusters_filtered = median_filter(clusters, 7)
         return clusters_filtered

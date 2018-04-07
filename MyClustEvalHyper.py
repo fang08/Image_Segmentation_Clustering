@@ -16,28 +16,9 @@ def eval_hyper(seg, gt, mask):
                 seg[i][j] = 0
 
     show_pic(seg)
-    # show_pic(gt)
     return oce(seg, gt)
 
 
-# def relabel(seg):
-#     m = len(seg)
-#     n = len(seg[0])
-#     lmap = {}
-#     label_count = 1
-#     for i in xrange(m):
-#         for j in xrange(n):
-#             if seg[i][j] == 0:
-#                 continue
-#             elif lmap.get(seg[i][j]) is None:
-#                 lmap.update({seg[i][j]: label_count})
-#                 label_count += 1
-#     for i in xrange(m):
-#         for j in xrange(n):
-#             if seg[i][j] != 0:
-#                 seg[i][j] = lmap.get(seg[i][j])
-#
-#     return seg
 
 
 if __name__ == '__main__':

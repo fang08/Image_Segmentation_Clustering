@@ -28,7 +28,6 @@ def MyKmeans (im, imageType, numClusts):
         # calculate connected components
         cc_image = cl(labels_k, connectivity=2)
         # add filters
-        # labels_filtered = gaussian_filter(labels_k, sigma = 2)
         labels_filtered = median_filter(labels_k, 7)
         return labels_filtered, cc_image
 
@@ -40,6 +39,5 @@ def MyKmeans (im, imageType, numClusts):
         kmeans.fit(im_reduced)
         labels_k = kmeans.labels_.reshape(height, width)
         # add filters
-        # labels_filtered = gaussian_filter(labels_k, sigma=2)
         labels_filtered = median_filter(labels_k, 7)
         return labels_filtered
